@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>Divisor</title>
+
+<script language="JavaScript">
+var loop;
+
+for(loop = 1000; loop < 1099; loop++)
+{
+    if(loop % 99 == 0)
+        break;
+}
+
+document.write(loop);
+</script>
+</head>
+<body>
+</body>
+</html>
