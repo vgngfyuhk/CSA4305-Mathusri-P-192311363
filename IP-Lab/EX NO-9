@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hotel Booking</title>
+
+<script>
+function bookRoom()
+{
+    var name=document.getElementById("name").value;
+    var room=document.getElementById("room").value;
+    alert("Room booked successfully!\nName: "+name+"\nRoom: "+room);
+}
+</script>
+
+</head>
+
+<body>
+
+<h2>Online Hotel Room Booking</h2>
+
+Name:
+<input type="text" id="name"><br><br>
+
+Check In:
+<input type="date"><br><br>
+
+Check Out:
+<input type="date"><br><br>
+
+Room Type:
+<select id="room">
+<option>Single</option>
+<option>Double</option>
+<option>Deluxe</option>
+<option>Suite</option>
+</select><br><br>
+
+Guests:
+<input type="number"><br><br>
+
+<button onclick="bookRoom()">Book Room</button>
+
+</body>
+</html>
