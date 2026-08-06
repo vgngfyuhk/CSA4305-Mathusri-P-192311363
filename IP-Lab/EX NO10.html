@@ -6,87 +6,133 @@
 <title>Online Bus Ticket Booking</title>
 
 <style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f2f2f2;
+*{
     margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
-.container{
-    max-width:500px;
-    margin:40px auto;
-    background:white;
+body{
+    background:#f4f4f4;
+}
+
+header{
+    background:#003366;
+    color:white;
     padding:20px;
-    border-radius:8px;
-    box-shadow:0 0 10px gray;
+    text-align:center;
 }
 
-h2{
+nav{
+    background:#00509E;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:15px 20px;
+}
+
+nav a:hover{
+    background:#003366;
+}
+
+.hero{
+    background:#d9ecff;
     text-align:center;
+    padding:40px;
+}
+
+.hero h2{
     color:#003366;
 }
 
-label{
-    font-weight:bold;
+.container{
+    width:90%;
+    max-width:1000px;
+    margin:auto;
+}
+
+section{
+    background:white;
+    margin:20px 0;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 8px lightgray;
 }
 
 input,select{
     width:100%;
     padding:10px;
-    margin-top:5px;
-    margin-bottom:15px;
-    border:1px solid #ccc;
-    border-radius:5px;
-    box-sizing:border-box;
+    margin:8px 0;
 }
 
 button{
-    width:100%;
-    padding:12px;
-    background:#007BFF;
+    background:#00509E;
     color:white;
     border:none;
-    border-radius:5px;
-    font-size:16px;
+    padding:12px;
+    width:100%;
     cursor:pointer;
+    font-size:16px;
 }
 
 button:hover{
-    background:#0056b3;
+    background:#003366;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+table,th,td{
+    border:1px solid gray;
+}
+
+th,td{
+    padding:10px;
+    text-align:center;
+}
+
+footer{
+    background:#003366;
+    color:white;
+    text-align:center;
+    padding:15px;
 }
 
 @media(max-width:600px){
-.container{
-margin:15px;
+nav{
+flex-direction:column;
 }
 }
 </style>
 
 <script>
-function bookTicket()
-{
+function bookTicket(){
+
 var name=document.getElementById("name").value;
 var from=document.getElementById("from").value;
 var to=document.getElementById("to").value;
 var date=document.getElementById("date").value;
 var bus=document.getElementById("bus").value;
-var seats=document.getElementById("seats").value;
 
-if(name==""||from==""||to==""||date==""||seats=="")
-{
-alert("Please fill all fields");
+if(name==""||from==""||to==""||date==""){
+alert("Please fill all details.");
 return;
 }
 
-alert(
-"Ticket Booked Successfully!\n\n"+
-"Passenger : "+name+
-"\nFrom : "+from+
-"\nTo : "+to+
-"\nJourney Date : "+date+
-"\nBus Type : "+bus+
-"\nSeats : "+seats
-);
+alert("Ticket Booked Successfully!\n\nPassenger: "+name+
+"\nFrom: "+from+
+"\nTo: "+to+
+"\nDate: "+date+
+"\nBus Type: "+bus);
+
 }
 </script>
 
@@ -94,9 +140,45 @@ alert(
 
 <body>
 
+<header>
+<h1>Online Bus Ticket Booking System</h1>
+<p>Book Your Journey Easily</p>
+</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#search">Search Bus</a>
+<a href="#booking">Book Ticket</a>
+<a href="#history">History</a>
+<a href="#contact">Contact</a>
+</nav>
+
+<div class="hero" id="home">
+<h2>Welcome to Online Bus Booking</h2>
+<p>Search buses and reserve your seat in minutes.</p>
+</div>
+
 <div class="container">
 
-<h2>Online Bus Ticket Booking System</h2>
+<section id="search">
+<h2>Search Bus</h2>
+
+<label>From</label>
+<input type="text" placeholder="Enter Source">
+
+<label>To</label>
+<input type="text" placeholder="Enter Destination">
+
+<label>Date</label>
+<input type="date">
+
+<button>Search Bus</button>
+
+</section>
+
+<section id="booking">
+
+<h2>Book Ticket</h2>
 
 <label>Passenger Name</label>
 <input type="text" id="name">
@@ -111,19 +193,71 @@ alert(
 <input type="date" id="date">
 
 <label>Bus Type</label>
+
 <select id="bus">
 <option>Volvo</option>
-<option>Sleeper</option>
-<option>AC Coach</option>
-<option>Non AC Coach</option>
+<option>AC Sleeper</option>
+<option>Non AC</option>
+<option>Luxury Coach</option>
 </select>
 
 <label>Number of Seats</label>
-<input type="number" id="seats" min="1">
+<input type="number" min="1">
 
 <button onclick="bookTicket()">Book Ticket</button>
 
+</section>
+
+<section id="history">
+
+<h2>Booking History</h2>
+
+<table>
+
+<tr>
+<th>Ticket No</th>
+<th>Route</th>
+<th>Date</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>101</td>
+<td>Chennai - Bangalore</td>
+<td>10-08-2026</td>
+<td>Confirmed</td>
+</tr>
+
+<tr>
+<td>102</td>
+<td>Chennai - Madurai</td>
+<td>15-08-2026</td>
+<td>Completed</td>
+</tr>
+
+</table>
+
+</section>
+
+<section id="contact">
+
+<h2>Contact Us</h2>
+
+<p>Email : support@busbooking.com</p>
+
+<p>Phone : +91 9876543210</p>
+
+<p>Address : Chennai, Tamil Nadu</p>
+
+</section>
+
 </div>
+
+<footer>
+
+<p>© 2026 Online Bus Ticket Booking System</p>
+
+</footer>
 
 </body>
 </html>
