@@ -1,0 +1,65 @@
+ALGORITHM PHPFormValidation
+
+START
+
+1. Receive form data from the user.
+
+2. Initialize an empty error list.
+
+3. Read:
+       Name
+       Email
+       Password
+
+4. Remove unnecessary spaces from the input.
+
+5. Check whether Name is empty.
+
+6. IF Name is empty THEN
+       Add "Name is required" to error list.
+   END IF
+
+7. Check whether Email is empty.
+
+8. IF Email is empty THEN
+       Add "Email is required" to error list.
+   ELSE
+       Check whether Email has a valid email format.
+
+       IF Email format is invalid THEN
+           Add "Enter a valid email address" to error list.
+       END IF
+   END IF
+
+9. Check whether Password is empty.
+
+10. IF Password is empty THEN
+        Add "Password is required" to error list.
+    ELSE
+        Check whether password length is at least 8 characters.
+
+        IF password is too short THEN
+            Add "Password must contain at least 8 characters"
+            to error list.
+        END IF
+    END IF
+
+11. Check whether the error list is empty.
+
+12. IF error list is NOT empty THEN
+
+        Display all appropriate error messages.
+
+        Ask the user to correct the input.
+
+    ELSE
+
+        Sanitize/validate the accepted data.
+
+        Process the form.
+
+        Display "Registration successful."
+
+    END IF
+
+END
