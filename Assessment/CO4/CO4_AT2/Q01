@@ -1,0 +1,56 @@
+ALGORITHM ParseXMLDocument
+
+START
+
+1. Specify the XML file name.
+
+2. Load the XML document into an XML parser.
+
+3. IF the XML file cannot be loaded THEN
+       Display "Error: XML file not found"
+       STOP
+   END IF
+
+4. Validate whether the XML document is well-formed.
+
+5. IF XML is invalid THEN
+       Display "Error: Invalid XML document"
+       STOP
+   END IF
+
+6. Access the root element of the XML document.
+
+7. Find all required parent elements such as "products".
+
+8. FOR each product node in the XML document DO
+
+       Access the product ID.
+
+       Access the product name.
+
+       Access the product price.
+
+       Access the product quantity.
+
+       Display:
+           Product ID
+           Product Name
+           Price
+           Quantity
+
+       IF the product contains child elements THEN
+           Traverse the child elements.
+           Extract their values.
+       END IF
+
+   END FOR
+
+9. IF no product nodes are found THEN
+       Display "No product data available"
+   END IF
+
+10. Close the XML parser.
+
+11. Display "XML processing completed."
+
+END
