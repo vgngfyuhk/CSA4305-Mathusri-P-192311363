@@ -1,0 +1,54 @@
+ALGORITHM RetrieveProductData
+
+START
+
+1. Define database URL, username, and password.
+
+2. Load the required database driver.
+
+3. Establish a connection with the database.
+
+4. IF connection fails THEN
+       Display "Database connection failed."
+       STOP
+   END IF
+
+5. Create a database statement or prepared statement.
+
+6. Define the SQL query:
+
+       SELECT * FROM Product;
+
+7. Execute the SQL query.
+
+8. Store the returned records in a Result Set.
+
+9. IF Result Set is empty THEN
+       Display "No product records found."
+   ELSE
+
+       WHILE another record exists DO
+
+           Read Product ID.
+
+           Read Product Name.
+
+           Read Product Price.
+
+           Read Product Quantity.
+
+           Display the product details.
+
+       END WHILE
+
+   END IF
+
+10. Close the Result Set.
+
+11. Close the Statement.
+
+12. Close the Database Connection.
+
+13. Display "Data retrieval completed."
+
+END
