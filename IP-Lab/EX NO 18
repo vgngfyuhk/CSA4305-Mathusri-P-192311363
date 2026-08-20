@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Home Finder - Real Estate</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f4f8f7;
+    color:#333;
+}
+
+header{
+    background:#126782;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+nav{
+    background:#0b4558;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:14px 18px;
+}
+
+nav a:hover{
+    background:#126782;
+}
+
+.hero{
+    background:#dff3f7;
+    text-align:center;
+    padding:50px 20px;
+}
+
+.hero h2{
+    color:#126782;
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.container{
+    width:90%;
+    max-width:1150px;
+    margin:auto;
+}
+
+section{
+    background:white;
+    margin:22px 0;
+    padding:22px;
+    border-radius:10px;
+    box-shadow:0 2px 8px #ddd;
+}
+
+h2{
+    color:#126782;
+    margin-bottom:15px;
+}
+
+h3{
+    color:#0b4558;
+    margin:10px 0;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+input,select{
+    width:100%;
+    padding:11px;
+    margin:5px 0 12px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    background:#126782;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:5px;
+    cursor:pointer;
+    margin:3px;
+}
+
+button:hover{
+    background:#0b4558;
+}
+
+.properties{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.property{
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:15px;
+}
+
+.property img{
+    width:100%;
+    height:190px;
+    object-fit:cover;
+    border-radius:7px;
+}
+
+.price{
+    font-size:20px;
+    font-weight:bold;
+    color:#126782;
+    margin:10px 0;
+}
+
+.badge{
+    display:inline-block;
+    background:#dff3f7;
+    color:#126782;
+    padding:5px 9px;
+    border-radius:12px;
+    margin:3px;
+    font-size:12px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#126782;
+    color:white;
+}
+
+.map{
+    background:#e3f0f3;
+    height:230px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:8px;
+    text-align:center;
+}
+
+footer{
+    background:#0b4558;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+@media(max-width:800px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .properties{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    nav{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .properties{
+        grid-template-columns:1fr;
+    }
+
+    table{
+        font-size:12px;
+    }
+
+    .hero h2{
+        font-size:24px;
+    }
+}
+
+</style>
+
+<script>
+
+var favorites=[];
+
+
+/* Login */
+
+function login(){
+
+    var username=document.getElementById("username").value;
+    var password=document.getElementById("password").value;
+
+    if(username=="" || password==""){
+        alert("Please enter username and password");
+    }
+    else{
+        alert("Buyer Login Successful!");
+    }
+
+}
+
+
+/* Registration */
+
+function register(){
+
+    var name=document.getElementById("regName").value;
+
+    if(name==""){
+        alert("Enter your name");
+    }
+    else{
+        alert("Registration Successful!");
+    }
+
+}
+
+
+/* Search */
+
+function searchProperty(){
+
+    var location=document.getElementById("location").value.toLowerCase();
+    var type=document.getElementById("type").value;
+    var maxPrice=document.getElementById("maxPrice").value;
+
+    var properties=document.getElementsByClassName("property");
+
+    for(var i=0;i<properties.length;i++){
+
+        var text=properties[i].innerText.toLowerCase();
+
+        var locationMatch=
+        location=="" || text.includes(location);
+
+        var typeMatch=
+        type=="All" || text.includes(type.toLowerCase());
+
+        var priceMatch=true;
+
+        if(maxPrice!=""){
+            var priceText=
+            properties[i].getAttribute("data-price");
+
+            priceMatch=
+            Number(priceText)<=Number(maxPrice);
+        }
+
+        if(locationMatch && typeMatch && priceMatch){
+            properties[i].style.display="block";
+        }
+        else{
+            properties[i].style.display="none";
+        }
+    }
+
+}
+
+
+/* Property Details */
+
+function details(name){
+
+    alert(
+        name+
+        "\n\nProperty available for viewing."+
+        "\nContact the agent for more details."
+    );
+
+}
+
+
+/* Favorites */
+
+function favorite(name){
+
+    favorites.push(name);
+
+    alert(
+        name+
+        " added to your favorite properties."
+    );
+
+}
+
+
+/* Map */
+
+function openMap(location){
+
+    window.open(
+        "https://www.google.com/maps/search/?api=1&query="+
+        encodeURIComponent(location),
+        "_blank"
+    );
+
+}
+
+
+/* Schedule Viewing */
+
+function schedule(name){
+
+    var date=prompt(
+        "Enter preferred viewing date:"
+    );
+
+    if(date){
+
+        alert(
+            "Viewing scheduled for "+
+            name+
+            "\nDate: "+date
+        );
+
+    }
+
+}
+
+
+/* Agent */
+
+function contactAgent(name){
+
+    alert(
+        "Contacting Agent: "+name+
+        "\nPhone: +91 9876543210"
+    );
+
+}
+
+
+/* Mortgage Calculator */
+
+function calculateMortgage(){
+
+    var price=
+    Number(document.getElementById("loanPrice").value);
+
+    var down=
+    Number(document.getElementById("downPayment").value);
+
+    var rate=
+    Number(document.getElementById("interest").value);
+
+    var years=
+    Number(document.getElementById("years").value);
+
+    var loan=price-down;
+
+    var monthlyRate=rate/12/100;
+
+    var months=years*12;
+
+    var emi;
+
+    if(monthlyRate==0){
+
+        emi=loan/months;
+
+    }
+    else{
+
+        emi=
+        loan*
+        monthlyRate*
+        Math.pow(1+monthlyRate,months)/
+        (Math.pow(1+monthlyRate,months)-1);
+
+    }
+
+    document.getElementById("emi").innerHTML=
+    "Estimated Monthly EMI: ₹"+
+    Math.round(emi);
+
+}
+
+
+/* Save Search */
+
+function saveSearch(){
+
+    var location=
+    document.getElementById("location").value;
+
+    var type=
+    document.getElementById("type").value;
+
+    var price=
+    document.getElementById("maxPrice").value;
+
+    if(location=="" && price==""){
+        alert("Enter search criteria first");
+    }
+    else{
+
+        alert(
+            "Search criteria saved!\n"+
+            "Location: "+location+
+            "\nType: "+type+
+            "\nMaximum Price: ₹"+price
+        );
+
+    }
+
+}
+
+
+/* Agent Search */
+
+function searchAgent(){
+
+    var name=
+    document.getElementById("agentName").value;
+
+    if(name==""){
+        alert("Enter agent name");
+    }
+    else{
+        alert(
+            "Agent found: "+name+
+            "\nContact: +91 9876543210"
+        );
+    }
+
+}
+
+
+/* Advertisement */
+
+function advertisement(){
+
+    alert(
+        "Special Offer!\n"+
+        "Get assistance from our property experts."
+    );
+
+}
+
+
+/* Logout */
+
+function logout(){
+
+    alert("Logged out successfully!");
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+
+<header>
+
+<h1>🏠 Home Finder</h1>
+
+<p>Find Your Dream Property</p>
+
+</header>
+
+
+<nav>
+
+<a href="#home">Home</a>
+<a href="#login">Login</a>
+<a href="#search">Search</a>
+<a href="#properties">Properties</a>
+<a href="#agents">Agents</a>
+<a href="#mortgage">Mortgage</a>
+<a href="#login" onclick="logout()">Logout</a>
+
+</nav>
+
+
+<div class="hero" id="home">
+
+<h2>Find Your Perfect Home</h2>
+
+<p>Search houses, apartments and lands within your budget.</p>
+
+<button onclick="advertisement()">
+View Special Offers
+</button>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- LOGIN -->
+
+<section id="login">
+
+<h2>Buyer Login</h2>
+
+<div class="form-grid">
+
+<div>
+
+<label>Username</label>
+
+<input type="text"
+id="username"
+placeholder="Enter username">
+
+</div>
+
+<div>
+
+<label>Password</label>
+
+<input type="password"
+id="password"
+placeholder="Enter password">
+
+</div>
+
+</div>
+
+<button onclick="login()">Login</button>
+
+</section>
+
+
+<!-- REGISTRATION -->
+
+<section>
+
+<h2>Buyer Registration</h2>
+
+<div class="form-grid">
+
+<input type="text"
+id="regName"
+placeholder="Full Name">
+
+<input type="email"
+placeholder="Email">
+
+<input type="tel"
+placeholder="Phone Number">
+
+<input type="password"
+placeholder="Create Password">
+
+</div>
+
+<button onclick="register()">
+Register
+</button>
+
+</section>
+
+
+<!-- SEARCH -->
+
+<section id="search">
+
+<h2>🔍 Search Properties</h2>
+
+<div class="form-grid">
+
+<div>
+
+<label>Location</label>
+
+<input type="text"
+id="location"
+placeholder="Example: Chennai">
+
+</div>
+
+<div>
+
+<label>Property Type</label>
+
+<select id="type">
+
+<option>All</option>
+<option>House</option>
+<option>Apartment</option>
+<option>Land</option>
+<option>Commercial</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label>Maximum Price</label>
+
+<input type="number"
+id="maxPrice"
+placeholder="Example: 5000000">
+
+</div>
+
+<div>
+
+<label>Amenities</label>
+
+<select>
+
+<option>Any</option>
+<option>Parking</option>
+<option>Swimming Pool</option>
+<option>Garden</option>
+<option>Security</option>
+
+</select>
+
+</div>
+
+</div>
+
+<button onclick="searchProperty()">
+Search Property
+</button>
+
+<button onclick="saveSearch()">
+Save Search
+</button>
+
+</section>
+
+
+<!-- PROPERTIES -->
+
+<section id="properties">
+
+<h2>🏡 Featured Properties</h2>
+
+<div class="properties">
+
+
+<div class="property"
+data-price="4500000">
+
+<img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c">
+
+<h3>Modern Family House</h3>
+
+<span class="badge">House</span>
+<span class="badge">Parking</span>
+
+<p>📍 Chennai</p>
+
+<div class="price">₹45,00,000</div>
+
+<p>3 Bedrooms • 2 Bathrooms</p>
+
+<button onclick="details('Modern Family House')">
+Details
+</button>
+
+<button onclick="favorite('Modern Family House')">
+♡ Favorite
+</button>
+
+<button onclick="openMap('Chennai')">
+Map
+</button>
+
+<button onclick="schedule('Modern Family House')">
+Schedule Visit
+</button>
+
+</div>
+
+
+<div class="property"
+data-price="3500000">
+
+<img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00">
+
+<h3>Luxury Apartment</h3>
+
+<span class="badge">Apartment</span>
+<span class="badge">Pool</span>
+
+<p>📍 Bangalore</p>
+
+<div class="price">₹35,00,000</div>
+
+<p>2 Bedrooms • 2 Bathrooms</p>
+
+<button onclick="details('Luxury Apartment')">
+Details
+</button>
+
+<button onclick="favorite('Luxury Apartment')">
+♡ Favorite
+</button>
+
+<button onclick="openMap('Bangalore')">
+Map
+</button>
+
+<button onclick="schedule('Luxury Apartment')">
+Schedule Visit
+</button>
+
+</div>
+
+
+<div class="property"
+data-price="2500000">
+
+<img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef">
+
+<h3>Residential Land</h3>
+
+<span class="badge">Land</span>
+<span class="badge">Road Access</span>
+
+<p>📍 Coimbatore</p>
+
+<div class="price">₹25,00,000</div>
+
+<p>1200 Sq.Ft • Clear Title</p>
+
+<button onclick="details('Residential Land')">
+Details
+</button>
+
+<button onclick="favorite('Residential Land')">
+♡ Favorite
+</button>
+
+<button onclick="openMap('Coimbatore')">
+Map
+</button>
+
+<button onclick="schedule('Residential Land')">
+Schedule Visit
+</button>
+
+</div>
+
+
+<div class="property"
+data-price="7500000">
+
+<img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c">
+
+<h3>Premium Villa</h3>
+
+<span class="badge">House</span>
+<span class="badge">Garden</span>
+
+<p>📍 Chennai</p>
+
+<div class="price">₹75,00,000</div>
+
+<p>4 Bedrooms • 3 Bathrooms</p>
+
+<button onclick="details('Premium Villa')">
+Details
+</button>
+
+<button onclick="favorite('Premium Villa')">
+♡ Favorite
+</button>
+
+<button onclick="openMap('Chennai')">
+Map
+</button>
+
+<button onclick="schedule('Premium Villa')">
+Schedule Visit
+</button>
+
+</div>
+
+
+<div class="property"
+data-price="6000000">
+
+<img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2">
+
+<h3>Commercial Office</h3>
+
+<span class="badge">Commercial</span>
+<span class="badge">Parking</span>
+
+<p>📍 Hyderabad</p>
+
+<div class="price">₹60,00,000</div>
+
+<p>2500 Sq.Ft • Main Road</p>
+
+<button onclick="details('Commercial Office')">
+Details
+</button>
+
+<button onclick="favorite('Commercial Office')">
+♡ Favorite
+</button>
+
+<button onclick="openMap('Hyderabad')">
+Map
+</button>
+
+<button onclick="schedule('Commercial Office')">
+Schedule Visit
+</button>
+
+</div>
+
+
+<div class="property"
+data-price="3000000">
+
+<img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3">
+
+<h3>Budget Apartment</h3>
+
+<span class="badge">Apartment</span>
+<span class="badge">Security</span>
+
+<p>📍 Madurai</p>
+
+<div class="price">₹30,00,000</div>
+
+<p>2 Bedrooms • 1 Bathroom</p>
+
+<button onclick="details('Budget Apartment')">
+Details
+</button>
+
+<button onclick="favorite('Budget Apartment')">
+♡ Favorite
+</button>
+
+<button onclick="openMap('Madurai')">
+Map
+</button>
+
+<button onclick="schedule('Budget Apartment')">
+Schedule Visit
+</button>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- GOOGLE MAP -->
+
+<section>
+
+<h2>📍 Property Location</h2>
+
+<div class="map">
+
+<div>
+
+<h3>Explore Properties on Google Maps</h3>
+
+<p>Select "Map" on any property to locate its area.</p>
+
+<br>
+
+<button onclick="openMap('Chennai')">
+Open Chennai Map
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- AGENTS -->
+
+<section id="agents">
+
+<h2>👨‍💼 Find an Agent</h2>
+
+<input type="text"
+id="agentName"
+placeholder="Enter agent name or company">
+
+<button onclick="searchAgent()">
+Search Agent
+</button>
+
+<h3>Featured Agents</h3>
+
+<table>
+
+<tr>
+<th>Agent</th>
+<th>Company</th>
+<th>Location</th>
+<th>Action</th>
+</tr>
+
+<tr>
+<td>Arun Kumar</td>
+<td>Home Experts</td>
+<td>Chennai</td>
+<td>
+<button onclick="contactAgent('Arun Kumar')">
+Contact
+</button>
+</td>
+</tr>
+
+<tr>
+<td>Priya Sharma</td>
+<td>Dream Homes</td>
+<td>Bangalore</td>
+<td>
+<button onclick="contactAgent('Priya Sharma')">
+Contact
+</button>
+</td>
+</tr>
+
+</table>
+
+</section>
+
+
+<!-- MORTGAGE -->
+
+<section id="mortgage">
+
+<h2>💰 Mortgage Calculator</h2>
+
+<div class="form-grid">
+
+<div>
+
+<label>Property Price</label>
+
+<input type="number"
+id="loanPrice"
+placeholder="Property price">
+
+</div>
+
+<div>
+
+<label>Down Payment</label>
+
+<input type="number"
+id="downPayment"
+placeholder="Down payment">
+
+</div>
+
+<div>
+
+<label>Interest Rate (%)</label>
+
+<input type="number"
+id="interest"
+value="8">
+
+</div>
+
+<div>
+
+<label>Loan Period (Years)</label>
+
+<input type="number"
+id="years"
+value="20">
+
+</div>
+
+</div>
+
+<button onclick="calculateMortgage()">
+Calculate EMI
+</button>
+
+<h3 id="emi"></h3>
+
+</section>
+
+
+<!-- SAVED SEARCH -->
+
+<section>
+
+<h2>⭐ Saved Search Criteria</h2>
+
+<table>
+
+<tr>
+<th>Location</th>
+<th>Type</th>
+<th>Maximum Price</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>Chennai</td>
+<td>House</td>
+<td>₹50,00,000</td>
+<td>Saved</td>
+</tr>
+
+</table>
+
+</section>
+
+
+<!-- CUSTOMER RECORD -->
+
+<section>
+
+<h2>👥 Customer Records</h2>
+
+<table>
+
+<tr>
+<th>Customer</th>
+<th>Email</th>
+<th>Activity</th>
+</tr>
+
+<tr>
+<td>Customer 1</td>
+<td>customer@gmail.com</td>
+<td>Property Search</td>
+</tr>
+
+<tr>
+<td>Customer 2</td>
+<td>buyer@gmail.com</td>
+<td>Property Viewing</td>
+</tr>
+
+</table>
+
+</section>
+
+
+</div>
+
+
+<footer>
+
+<p>© 2026 Home Finder Real Estate</p>
+
+<p>Find • Explore • Buy • Rent</p>
+
+</footer>
+
+</body>
+</html>
