@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Cake Ordering System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial;
+}
+
+body{
+    background:#fff5f7;
+    color:#333;
+}
+
+header{
+    background:#c2185b;
+    color:white;
+    text-align:center;
+    padding:22px;
+}
+
+nav{
+    background:#880e4f;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:14px 18px;
+}
+
+nav a:hover{
+    background:#c2185b;
+}
+
+.hero{
+    text-align:center;
+    padding:45px 20px;
+    background:#ffe0e8;
+}
+
+.hero h2{
+    color:#c2185b;
+    margin-bottom:10px;
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:auto;
+}
+
+section{
+    background:white;
+    margin:20px 0;
+    padding:22px;
+    border-radius:10px;
+    box-shadow:0 2px 8px #ddd;
+}
+
+h2{
+    color:#c2185b;
+    margin-bottom:15px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+textarea{
+    height:80px;
+}
+
+button{
+    background:#c2185b;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+button:hover{
+    background:#880e4f;
+}
+
+.cakes{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.cake{
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:15px;
+    text-align:center;
+}
+
+.cake img{
+    width:100%;
+    height:170px;
+    object-fit:cover;
+    border-radius:6px;
+}
+
+.cake h3{
+    color:#c2185b;
+    margin:10px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#c2185b;
+    color:white;
+}
+
+footer{
+    background:#880e4f;
+    color:white;
+    text-align:center;
+    padding:18px;
+    margin-top:20px;
+}
+
+@media(max-width:800px){
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .cakes{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+    nav{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .cakes{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+
+<script>
+
+function login(){
+    var user=document.getElementById("username").value;
+    var pass=document.getElementById("password").value;
+
+    if(user=="" || pass=="")
+        alert("Enter username and password");
+    else
+        alert("Login Successful!");
+}
+
+function register(){
+    var name=document.getElementById("regname").value;
+
+    if(name=="")
+        alert("Enter your name");
+    else
+        alert("Registration Successful!");
+}
+
+function searchCake(){
+    var cake=document.getElementById("search").value;
+
+    if(cake=="")
+        alert("Enter cake name");
+    else
+        alert("Searching for: "+cake);
+}
+
+function addCart(name,price){
+    alert(name+" added to cart!\nPrice: ₹"+price);
+}
+
+function placeOrder(){
+
+    var name=document.getElementById("customer").value;
+    var address=document.getElementById("address").value;
+    var cake=document.getElementById("orderCake").value;
+
+    if(name=="" || address==""){
+        alert("Please enter customer name and address");
+        return;
+    }
+
+    var order="CA"+Math.floor(100000+Math.random()*900000);
+
+    document.getElementById("orderId").innerHTML=order;
+
+    alert("Order placed successfully!\n\nOrder ID: "
+          +order+"\nCake: "+cake);
+
+}
+
+function payment(){
+
+    var amount=document.getElementById("amount").value;
+
+    if(amount=="")
+        alert("Enter payment amount");
+    else
+        alert("Payment of ₹"+amount+" successful!");
+}
+
+function shipping(){
+
+    var id=document.getElementById("track").value;
+
+    if(id=="")
+        alert("Enter Order ID");
+    else
+        document.getElementById("status").innerHTML=
+        "Order "+id+" : OUT FOR DELIVERY";
+}
+
+function adminLogin(){
+    alert("Admin Login Successful!");
+}
+
+function updateOrder(){
+    alert("Order status updated successfully!");
+}
+
+</script>
+
+</head>
+
+<body>
+
+<header>
+<h1>🎂 Online Cake Ordering System</h1>
+<p>Fresh Cakes • Easy Ordering • Fast Delivery</p>
+</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#login">Login</a>
+<a href="#cakes">Cakes</a>
+<a href="#order">Place Order</a>
+<a href="#payment">Payment</a>
+<a href="#orders">My Orders</a>
+<a href="#admin">Admin</a>
+</nav>
+
+<div class="hero" id="home">
+<h2>Delicious Cakes for Every Occasion</h2>
+<p>Choose your favourite cake and order online.</p>
+</div>
+
+<div class="container">
+
+<!-- Student Login -->
+
+<section id="login">
+
+<h2>Student / User Login</h2>
+
+<div class="form-grid">
+
+<div>
+<label>Username</label>
+<input type="text" id="username"
+placeholder="Enter username">
+</div>
+
+<div>
+<label>Password</label>
+<input type="password" id="password"
+placeholder="Enter password">
+</div>
+
+</div>
+
+<button onclick="login()">Login</button>
+
+</section>
+
+<!-- Registration -->
+
+<section>
+
+<h2>Register</h2>
+
+<input type="text" id="regname"
+placeholder="Enter your name">
+
+<input type="email"
+placeholder="Enter email">
+
+<input type="password"
+placeholder="Create password">
+
+<button onclick="register()">Register</button>
+
+</section>
+
+<!-- Search -->
+
+<section>
+
+<h2>Search Cake</h2>
+
+<input type="text" id="search"
+placeholder="Search cake">
+
+<select>
+<option>All Categories</option>
+<option>Birthday</option>
+<option>Wedding</option>
+<option>Anniversary</option>
+<option>Chocolate</option>
+</select>
+
+<select>
+<option>All Prices</option>
+<option>Below ₹500</option>
+<option>₹500 - ₹1000</option>
+<option>Above ₹1000</option>
+</select>
+
+<button onclick="searchCake()">Search</button>
+
+</section>
+
+<!-- Cake List -->
+
+<section id="cakes">
+
+<h2>Available Cakes</h2>
+
+<div class="cakes">
+
+<div class="cake">
+
+<img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587">
+
+<h3>Chocolate Cake</h3>
+
+<p>Rich chocolate cake</p>
+
+<p><b>₹600</b></p>
+
+<button onclick="addCart('Chocolate Cake',600)">
+Add to Cart
+</button>
+
+</div>
+
+<div class="cake">
+
+<img src="https://images.unsplash.com/photo-1551024506-0bccd828d307">
+
+<h3>Strawberry Cake</h3>
+
+<p>Fresh strawberry flavour</p>
+
+<p><b>₹750</b></p>
+
+<button onclick="addCart('Strawberry Cake',750)">
+Add to Cart
+</button>
+
+</div>
+
+<div class="cake">
+
+<img src="https://images.unsplash.com/photo-1535141192574-5d4897c12636">
+
+<h3>Birthday Cake</h3>
+
+<p>Perfect for celebrations</p>
+
+<p><b>₹900</b></p>
+
+<button onclick="addCart('Birthday Cake',900)">
+Add to Cart
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- Order -->
+
+<section id="order">
+
+<h2>Place Order</h2>
+
+<div class="form-grid">
+
+<div>
+
+<label>Customer Name</label>
+
+<input type="text"
+id="customer"
+placeholder="Enter name">
+
+</div>
+
+<div>
+
+<label>Select Cake</label>
+
+<select id="orderCake">
+
+<option>Chocolate Cake</option>
+<option>Strawberry Cake</option>
+<option>Birthday Cake</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label>Cake Size</label>
+
+<select>
+<option>500g</option>
+<option>1 Kg</option>
+<option>2 Kg</option>
+</select>
+
+</div>
+
+<div>
+
+<label>Delivery Date</label>
+
+<input type="date">
+
+</div>
+
+</div>
+
+<label>Shipping Address</label>
+
+<textarea id="address"
+placeholder="Enter delivery address"></textarea>
+
+<label>Special Message</label>
+
+<textarea
+placeholder="Write message on cake"></textarea>
+
+<button onclick="placeOrder()">Place Order</button>
+
+</section>
+
+<!-- Payment -->
+
+<section id="payment">
+
+<h2>Payment</h2>
+
+<input type="text"
+placeholder="Card / UPI Number">
+
+<input type="number"
+id="amount"
+placeholder="Enter Amount">
+
+<button onclick="payment()">Make Payment</button>
+
+</section>
+
+<!-- My Orders -->
+
+<section id="orders">
+
+<h2>My Orders</h2>
+
+<table>
+
+<tr>
+<th>Order ID</th>
+<th>Cake</th>
+<th>Price</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td id="orderId">CA123456</td>
+<td>Chocolate Cake</td>
+<td>₹600</td>
+<td>Confirmed</td>
+</tr>
+
+</table>
+
+</section>
+
+<!-- Shipping -->
+
+<section>
+
+<h2>View Shipping Status</h2>
+
+<input type="text"
+id="track"
+placeholder="Enter Order ID">
+
+<button onclick="shipping()">Track Order</button>
+
+<p id="status"></p>
+
+</section>
+
+<!-- Admin -->
+
+<section id="admin">
+
+<h2>Admin Panel</h2>
+
+<button onclick="adminLogin()">Admin Login</button>
+
+<h3>Manage Products</h3>
+
+<input type="text"
+placeholder="Cake Name">
+
+<input type="number"
+placeholder="Price">
+
+<textarea
+placeholder="Cake Description"></textarea>
+
+<button>Post Cake Details</button>
+
+<h3>Manage Orders</h3>
+
+<table>
+
+<tr>
+<th>Order ID</th>
+<th>Customer</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>CA123456</td>
+<td>Customer 1</td>
+<td>Processing</td>
+</tr>
+
+</table>
+
+<button onclick="updateOrder()">
+Update Order Status
+</button>
+
+</section>
+
+</div>
+
+<footer>
+
+<p>© 2026 Online Cake Ordering System</p>
+<p>Fresh Cakes | Easy Ordering | Fast Delivery</p>
+
+</footer>
+
+</body>
+</html>
