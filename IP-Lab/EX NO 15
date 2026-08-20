@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedCare Hospital Appointment System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f1f8f9;
+    color:#333;
+}
+
+header{
+    background:#087f8c;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+nav{
+    background:#055d66;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:14px 18px;
+}
+
+nav a:hover{
+    background:#087f8c;
+}
+
+.hero{
+    background:#dff7f8;
+    text-align:center;
+    padding:50px 20px;
+}
+
+.hero h2{
+    color:#087f8c;
+    margin-bottom:10px;
+    font-size:30px;
+}
+
+.container{
+    width:90%;
+    max-width:1100px;
+    margin:auto;
+}
+
+section{
+    background:white;
+    margin:22px 0;
+    padding:22px;
+    border-radius:10px;
+    box-shadow:0 2px 8px #ddd;
+}
+
+h2{
+    color:#087f8c;
+    margin-bottom:15px;
+}
+
+h3{
+    margin:15px 0 10px;
+    color:#055d66;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:11px;
+    margin-top:5px;
+    margin-bottom:12px;
+    border:1px solid #bbb;
+    border-radius:5px;
+}
+
+textarea{
+    height:90px;
+    resize:none;
+}
+
+button{
+    background:#087f8c;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:5px;
+    cursor:pointer;
+    margin-top:5px;
+}
+
+button:hover{
+    background:#055d66;
+}
+
+.hospitals{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.hospital{
+    border:1px solid #ddd;
+    padding:18px;
+    border-radius:8px;
+}
+
+.hospital h3{
+    color:#087f8c;
+}
+
+.doctors{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.doctor{
+    border:1px solid #ddd;
+    padding:18px;
+    border-radius:8px;
+    text-align:center;
+}
+
+.doctor h3{
+    color:#087f8c;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#087f8c;
+    color:white;
+}
+
+.message{
+    margin-top:12px;
+    font-weight:bold;
+}
+
+footer{
+    background:#055d66;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:20px;
+}
+
+@media(max-width:800px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .hospitals,
+    .doctors{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+
+    nav{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .hospitals,
+    .doctors{
+        grid-template-columns:1fr;
+    }
+
+    table{
+        font-size:12px;
+    }
+
+    .hero h2{
+        font-size:24px;
+    }
+}
+</style>
+
+<script>
+
+/* Patient Login */
+
+function login(){
+
+    var email=document.getElementById("loginEmail").value;
+    var password=document.getElementById("loginPassword").value;
+
+    if(email=="" || password==""){
+        alert("Please enter email and password");
+    }
+    else{
+        alert("Patient Login Successful!");
+    }
+}
+
+
+/* Registration */
+
+function register(){
+
+    var name=document.getElementById("regName").value;
+    var email=document.getElementById("regEmail").value;
+
+    if(name=="" || email==""){
+        alert("Please fill registration details");
+    }
+    else{
+        alert("Registration Successful!");
+    }
+}
+
+
+/* Search Hospital */
+
+function searchHospital(){
+
+    var location=document.getElementById("location").value;
+    var specialty=document.getElementById("specialty").value;
+
+    if(location==""){
+        alert("Enter location");
+        return;
+    }
+
+    document.getElementById("searchResult").innerHTML=
+    "Hospitals and doctors found in "+location+
+    " for "+specialty+".";
+}
+
+
+/* Book Appointment */
+
+function bookAppointment(){
+
+    var name=document.getElementById("patientName").value;
+    var hospital=document.getElementById("hospital").value;
+    var doctor=document.getElementById("doctor").value;
+    var date=document.getElementById("date").value;
+    var time=document.getElementById("time").value;
+
+    if(name=="" || date=="" || time==""){
+        alert("Please fill all appointment details");
+        return;
+    }
+
+    var id="MC"+Math.floor(100000+Math.random()*900000);
+
+    document.getElementById("appointmentId").innerHTML=id;
+    document.getElementById("patientDisplay").innerHTML=name;
+    document.getElementById("hospitalDisplay").innerHTML=hospital;
+    document.getElementById("doctorDisplay").innerHTML=doctor;
+    document.getElementById("dateDisplay").innerHTML=date;
+    document.getElementById("timeDisplay").innerHTML=time;
+
+    alert("Appointment booked successfully!\nAppointment ID: "+id);
+}
+
+
+/* Cancel Appointment */
+
+function cancelAppointment(){
+
+    var id=document.getElementById("cancelId").value;
+
+    if(id==""){
+        alert("Enter appointment ID");
+    }
+    else{
+        alert("Appointment "+id+
+        " cancelled successfully.");
+    }
+}
+
+
+/* Check-in */
+
+function checkIn(){
+
+    var id=document.getElementById("checkinId").value;
+
+    if(id==""){
+        alert("Enter appointment ID");
+    }
+    else{
+        alert("Check-in form submitted successfully!");
+    }
+}
+
+
+/* Patient Review */
+
+function review(){
+
+    var name=document.getElementById("reviewName").value;
+    var text=document.getElementById("reviewText").value;
+
+    if(name=="" || text==""){
+        alert("Please enter your review");
+    }
+    else{
+        alert("Thank you "+name+" for your feedback!");
+    }
+}
+
+
+/* Admin */
+
+function adminLogin(){
+
+    alert("Admin Login Successful!");
+}
+
+
+function manageDoctors(){
+
+    alert("Doctor details updated successfully!");
+}
+
+
+function statistics(){
+
+    document.getElementById("stats").innerHTML=
+    "Total Appointments: 120 | Confirmed: 95 | Cancelled: 15 | Pending: 10";
+}
+
+
+/* Hospital */
+
+function hospitalRegister(){
+
+    alert("Hospital Registration Successful!");
+}
+
+
+function updateHospital(){
+
+    alert("Hospital details updated successfully!");
+}
+
+
+/* Map */
+
+function openMap(){
+
+    window.open(
+    "https://www.google.com/maps/search/?api=1&query=Chennai",
+    "_blank"
+    );
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+
+<header>
+
+<h1>🏥 MedCare Hospital</h1>
+
+<p>Online Hospital Appointment Booking System</p>
+
+</header>
+
+
+<nav>
+
+<a href="#home">Home</a>
+<a href="#login">Login</a>
+<a href="#search">Search</a>
+<a href="#doctors">Doctors</a>
+<a href="#booking">Book Appointment</a>
+<a href="#checkin">Check-in</a>
+<a href="#history">History</a>
+<a href="#admin">Admin</a>
+
+</nav>
+
+
+<!-- Home -->
+
+<div class="hero" id="home">
+
+<h2>Your Health, Our Priority</h2>
+
+<p>Find hospitals and doctors and book your appointment easily.</p>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- Login -->
+
+<section id="login">
+
+<h2>Patient Login</h2>
+
+<div class="form-grid">
+
+<div>
+
+<label>Email</label>
+
+<input type="email"
+id="loginEmail"
+placeholder="Enter email">
+
+</div>
+
+<div>
+
+<label>Password</label>
+
+<input type="password"
+id="loginPassword"
+placeholder="Enter password">
+
+</div>
+
+</div>
+
+<button onclick="login()">Login</button>
+
+</section>
+
+
+<!-- Registration -->
+
+<section>
+
+<h2>Patient Registration</h2>
+
+<div class="form-grid">
+
+<div>
+
+<input type="text"
+id="regName"
+placeholder="Full Name">
+
+</div>
+
+<div>
+
+<input type="email"
+id="regEmail"
+placeholder="Email">
+
+</div>
+
+<div>
+
+<input type="tel"
+placeholder="Phone Number">
+
+</div>
+
+<div>
+
+<input type="password"
+placeholder="Create Password">
+
+</div>
+
+</div>
+
+<button onclick="register()">Register</button>
+
+</section>
+
+
+<!-- Search -->
+
+<section id="search">
+
+<h2>Search Hospital / Doctor</h2>
+
+<div class="form-grid">
+
+<div>
+
+<label>Location</label>
+
+<input type="text"
+id="location"
+placeholder="Enter city or location">
+
+</div>
+
+<div>
+
+<label>Specialty</label>
+
+<select id="specialty">
+
+<option>All Specialties</option>
+<option>Cardiology</option>
+<option>Dermatology</option>
+<option>Neurology</option>
+<option>Orthopedics</option>
+<option>Pediatrics</option>
+<option>General Medicine</option>
+
+</select>
+
+</div>
+
+</div>
+
+<button onclick="searchHospital()">
+Search
+</button>
+
+<p class="message" id="searchResult"></p>
+
+</section>
+
+
+<!-- Hospital List -->
+
+<section>
+
+<h2>Available Hospitals</h2>
+
+<div class="hospitals">
+
+<div class="hospital">
+
+<h3>MedCare Hospital</h3>
+
+<p>📍 Chennai</p>
+
+<p>⭐ 4.8 / 5</p>
+
+<p>Specialties: Cardiology, Neurology</p>
+
+<button onclick="openMap()">View Google Map</button>
+
+</div>
+
+
+<div class="hospital">
+
+<h3>City Care Hospital</h3>
+
+<p>📍 Chennai</p>
+
+<p>⭐ 4.6 / 5</p>
+
+<p>Specialties: Orthopedics, Pediatrics</p>
+
+<button onclick="openMap()">View Google Map</button>
+
+</div>
+
+
+<div class="hospital">
+
+<h3>Health Plus Hospital</h3>
+
+<p>📍 Bangalore</p>
+
+<p>⭐ 4.7 / 5</p>
+
+<p>Specialties: Dermatology, General Medicine</p>
+
+<button onclick="openMap()">View Google Map</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- Doctors -->
+
+<section id="doctors">
+
+<h2>Available Doctors</h2>
+
+<div class="doctors">
+
+<div class="doctor">
+
+<h3>Dr. Priya</h3>
+
+<p>Cardiologist</p>
+
+<p>⭐ 4.9</p>
+
+<p>Available: 10 AM - 1 PM</p>
+
+</div>
+
+
+<div class="doctor">
+
+<h3>Dr. Arun</h3>
+
+<p>Dermatologist</p>
+
+<p>⭐ 4.7</p>
+
+<p>Available: 2 PM - 5 PM</p>
+
+</div>
+
+
+<div class="doctor">
+
+<h3>Dr. Meena</h3>
+
+<p>Pediatrician</p>
+
+<p>⭐ 4.8</p>
+
+<p>Available: 9 AM - 12 PM</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- Booking -->
+
+<section id="booking">
+
+<h2>Book Appointment</h2>
+
+<div class="form-grid">
+
+<div>
+
+<label>Patient Name</label>
+
+<input type="text"
+id="patientName"
+placeholder="Enter patient name">
+
+</div>
+
+
+<div>
+
+<label>Hospital</label>
+
+<select id="hospital">
+
+<option>MedCare Hospital</option>
+<option>City Care Hospital</option>
+<option>Health Plus Hospital</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Doctor</label>
+
+<select id="doctor">
+
+<option>Dr. Priya - Cardiology</option>
+<option>Dr. Arun - Dermatology</option>
+<option>Dr. Meena - Pediatrics</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Date</label>
+
+<input type="date" id="date">
+
+</div>
+
+
+<div>
+
+<label>Time</label>
+
+<select id="time">
+
+<option>10:00 AM</option>
+<option>11:00 AM</option>
+<option>12:00 PM</option>
+<option>02:00 PM</option>
+<option>03:00 PM</option>
+<option>04:00 PM</option>
+
+</select>
+
+</div>
+
+</div>
+
+<button onclick="bookAppointment()">
+Book Appointment
+</button>
+
+</section>
+
+
+<!-- Check-in -->
+
+<section id="checkin">
+
+<h2>Check-in Form</h2>
+
+<input type="text"
+id="checkinId"
+placeholder="Appointment ID">
+
+<input type="text"
+placeholder="Patient Name">
+
+<textarea
+placeholder="Describe your symptoms"></textarea>
+
+<button onclick="checkIn()">
+Submit Check-in
+</button>
+
+</section>
+
+
+<!-- Appointment Details -->
+
+<section>
+
+<h2>Appointment Details</h2>
+
+<table>
+
+<tr>
+<th>Appointment ID</th>
+<td id="appointmentId">MC123456</td>
+</tr>
+
+<tr>
+<th>Patient</th>
+<td id="patientDisplay">Patient</td>
+</tr>
+
+<tr>
+<th>Hospital</th>
+<td id="hospitalDisplay">MedCare Hospital</td>
+</tr>
+
+<tr>
+<th>Doctor</th>
+<td id="doctorDisplay">Dr. Priya</td>
+</tr>
+
+<tr>
+<th>Date</th>
+<td id="dateDisplay">20-08-2026</td>
+</tr>
+
+<tr>
+<th>Time</th>
+<td id="timeDisplay">10:00 AM</td>
+</tr>
+
+<tr>
+<th>Status</th>
+<td>Confirmed</td>
+</tr>
+
+</table>
+
+</section>
+
+
+<!-- Cancel -->
+
+<section>
+
+<h2>Cancel Appointment</h2>
+
+<input type="text"
+id="cancelId"
+placeholder="Enter Appointment ID">
+
+<button onclick="cancelAppointment()">
+Cancel Appointment
+</button>
+
+</section>
+
+
+<!-- History -->
+
+<section id="history">
+
+<h2>Past Appointment History</h2>
+
+<table>
+
+<tr>
+
+<th>ID</th>
+<th>Doctor</th>
+<th>Specialty</th>
+<th>Date</th>
+<th>Status</th>
+
+</tr>
+
+<tr>
+
+<td>MC100001</td>
+<td>Dr. Priya</td>
+<td>Cardiology</td>
+<td>10-08-2026</td>
+<td>Completed</td>
+
+</tr>
+
+<tr>
+
+<td>MC100002</td>
+<td>Dr. Arun</td>
+<td>Dermatology</td>
+<td>05-08-2026</td>
+<td>Completed</td>
+
+</tr>
+
+</table>
+
+</section>
+
+
+<!-- Review -->
+
+<section>
+
+<h2>Doctor Review & Rating</h2>
+
+<input type="text"
+id="reviewName"
+placeholder="Your Name">
+
+<select>
+
+<option>⭐ 5 - Excellent</option>
+<option>⭐ 4 - Good</option>
+<option>⭐ 3 - Average</option>
+<option>⭐ 2 - Poor</option>
+<option>⭐ 1 - Very Poor</option>
+
+</select>
+
+<textarea
+id="reviewText"
+placeholder="Write your review"></textarea>
+
+<button onclick="review()">
+Submit Review
+</button>
+
+</section>
+
+
+<!-- Admin -->
+
+<section id="admin">
+
+<h2>Admin Panel</h2>
+
+<button onclick="adminLogin()">Admin Login</button>
+
+<h3>Manage Appointments</h3>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Patient</th>
+<th>Doctor</th>
+<th>Date</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>MC100001</td>
+<td>Patient 1</td>
+<td>Dr. Priya</td>
+<td>20-08-2026</td>
+<td>Confirmed</td>
+</tr>
+
+<tr>
+<td>MC100002</td>
+<td>Patient 2</td>
+<td>Dr. Arun</td>
+<td>21-08-2026</td>
+<td>Pending</td>
+</tr>
+
+</table>
+
+<br>
+
+<button onclick="statistics()">
+View Appointment Statistics
+</button>
+
+<p class="message" id="stats"></p>
+
+<h3>Manage Doctors</h3>
+
+<input type="text"
+placeholder="Doctor Name">
+
+<input type="text"
+placeholder="Specialty">
+
+<button onclick="manageDoctors()">
+Update Doctor
+</button>
+
+</section>
+
+
+<!-- Hospital -->
+
+<section>
+
+<h2>Hospital Registration</h2>
+
+<input type="text"
+placeholder="Hospital Name">
+
+<input type="text"
+placeholder="Hospital Location">
+
+<input type="tel"
+placeholder="Contact Number">
+
+<button onclick="hospitalRegister()">
+Register Hospital
+</button>
+
+<h3>Update Hospital Details</h3>
+
+<textarea
+placeholder="Hospital description"></textarea>
+
+<button onclick="updateHospital()">
+Update Details
+</button>
+
+</section>
+
+
+</div>
+
+
+<footer>
+
+<p>© 2026 MedCare Hospital Appointment System</p>
+
+<p>Healthcare • Trust • Care</p>
+
+</footer>
+
+</body>
+</html>
