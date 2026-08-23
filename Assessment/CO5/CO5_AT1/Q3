@@ -1,0 +1,65 @@
+import java.util.Scanner;
+
+public class SOAPDebug {
+
+    static void processSOAPRequest(String endpoint,
+                                   String namespace,
+                                   int id) {
+
+        System.out.println("\n--- SOAP REQUEST DEBUGGING ---");
+
+        if (!endpoint.equals("http://localhost:8080/EnterpriseDataService")) {
+            System.out.println("SOAP Fault: Invalid Endpoint");
+            return;
+        }
+
+        if (!namespace.equals("http://example.com/service")) {
+            System.out.println("SOAP Fault: Invalid Namespace");
+            return;
+        }
+
+        if (id <= 0) {
+            System.out.println("SOAP Fault: Invalid Patient/Data ID");
+            return;
+        }
+
+        System.out.println("SOAP Envelope: Valid");
+        System.out.println("SOAP Header: Valid");
+        System.out.println("SOAP Body: Valid");
+        System.out.println("Namespace: Valid");
+        System.out.println("Endpoint: Valid");
+
+        System.out.println("\nRequest Processed Successfully");
+        System.out.println("ID: " + id);
+
+        System.out.println("\nSOAP Response:");
+        System.out.println("<soap:Envelope>");
+        System.out.println("  <soap:Body>");
+        System.out.println("    <getDataResponse>");
+        System.out.println("      <status>Success</status>");
+        System.out.println("      <id>" + id + "</id>");
+        System.out.println("    </getDataResponse>");
+        System.out.println("  </soap:Body>");
+        System.out.println("</soap:Envelope>");
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String endpoint =
+            "http://localhost:8080/EnterpriseDataService";
+
+        String namespace =
+            "http://example.com/service";
+
+        System.out.println("SOAP COMMUNICATION SYSTEM");
+
+        System.out.print("Enter Data ID: ");
+        int id = sc.nextInt();
+
+        processSOAPRequest(endpoint, namespace, id);
+
+        sc.close();
+    }
+}
