@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<definitions
+    name="EnterpriseDataService"
+    targetNamespace="http://example.com/service"
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://example.com/service"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+
+    <types>
+
+        <xsd:schema
+            targetNamespace="http://example.com/service">
+
+            <xsd:element name="getDataRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="getDataResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="name" type="xsd:string"/>
+                        <xsd:element name="value" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="updateDataRequest">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="id" type="xsd:int"/>
+                        <xsd:element name="value" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+
+            <xsd:element name="updateDataResponse"
+                         type="xsd:string"/>
+
+        </xsd:schema>
+
+    </types>
+
+    <message name="GetDataRequest">
+        <part name="parameters"
+              element="tns:getDataRequest"/>
+    </message>
+
+    <message name="GetDataResponse">
+        <part name="parameters"
+              element="tns:getDataResponse"/>
+    </message>
+
+    <message name="UpdateDataRequest">
+        <part name="parameters"
+              element="tns:updateDataRequest"/>
+    </message>
+
+    <message name="UpdateDataResponse">
+        <part name="parameters"
+              element="tns:updateDataResponse"/>
+    </message>
+
+    <portType name="EnterpriseDataPortType">
+
+        <operation name="getData">
+            <input message="tns:GetDataRequest"/>
+            <output message="tns:GetDataResponse"/>
+        </operation>
+
+        <operation name="updateData">
+            <input message="tns:UpdateDataRequest"/>
+            <output message="tns:UpdateDataResponse"/>
+        </operation>
+
+    </portType>
+
+    <binding name="EnterpriseDataBinding"
+             type="tns:EnterpriseDataPortType">
+
+        <soap:binding
+            transport="http://schemas.xmlsoap.org/soap/http"
+            style="document"/>
+
+        <operation name="getData">
+
+            <soap:operation
+                soapAction="getData"/>
+
+            <input>
+                <soap:body use="literal"/>
+            </input>
+
+            <output>
+                <soap:body use="literal"/>
+            </output>
+
+        </operation>
+
+        <operation name="updateData">
+
+            <soap:operation
+                soapAction="updateData"/>
+
+            <input>
+                <soap:body use="literal"/>
+            </input>
+
+            <output>
+                <soap:body use="literal"/>
+            </output>
+
+        </operation>
+
+    </binding>
+
+    <service name="EnterpriseDataService">
+
+        <port name="EnterpriseDataPort"
+              binding="tns:EnterpriseDataBinding">
+
+            <soap:address
+                location="http://localhost:8080/EnterpriseDataService"/>
+
+        </port>
+
+    </service>
+
+</definitions>
