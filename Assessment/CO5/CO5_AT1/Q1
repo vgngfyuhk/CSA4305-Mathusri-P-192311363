@@ -1,0 +1,63 @@
+import java.util.Scanner;
+
+public class HospitalSOAP {
+
+    static void addPatient(String id, String name, int age, String dept) {
+        System.out.println("Patient Registered Successfully");
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Department: " + dept);
+    }
+
+    static void getPatient(String id) {
+        System.out.println("Patient Details Retrieved");
+        System.out.println("Patient ID: " + id);
+    }
+
+    static void scheduleAppointment(String id, String doctor, String date) {
+        System.out.println("Appointment Scheduled Successfully");
+        System.out.println("Patient ID: " + id);
+        System.out.println("Doctor: " + doctor);
+        System.out.println("Date: " + date);
+    }
+
+    static void getMedicalRecords(String id) {
+        System.out.println("Medical Records Retrieved");
+        System.out.println("Patient ID: " + id);
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("HOSPITAL SOAP WEB SERVICE");
+
+        System.out.print("Enter Patient ID: ");
+        String id = sc.nextLine();
+
+        System.out.print("Enter Patient Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Age: ");
+        int age = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Enter Department: ");
+        String dept = sc.nextLine();
+
+        addPatient(id, name, age, dept);
+
+        getPatient(id);
+
+        scheduleAppointment(
+            id,
+            "Dr. Smith",
+            "25-08-2026"
+        );
+
+        getMedicalRecords(id);
+
+        sc.close();
+    }
+}
