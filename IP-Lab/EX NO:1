@@ -1,24 +1,195 @@
 <!DOCTYPE html>
 <html>
-    <h2>SURVEY</h2>
-    <form>
-        <label for="sname">STUDENT NAME:  </label>
-        <input type="text" name="sname" id="sname">
-        <br><br>
-        <label for="reg">REGISTER NUMBER:  </label>
-        <input type="text" name="reg" id="reg">
-        <br>
-        <p>GENDER 
-        <input type="radio" name="gender" id="gender">
-        <label for="male">Male</label>
-        <input type="radio" name="gender" id="gender">
-        <label for="female">Female</label></p>
-        <p>ONGOING SLOTS
-        <input type="checkbox"><label for="one">1</label>
-        <input type="checkbox"><label for="two">2</label>
-        <input type="checkbox"><label for="three">3</label>
-        <input type="checkbox"><label for="four">4</label></p>
-        <label for="address:  ">Address</label>
-        <textarea rows="3" cols="30"></textarea>
+<head>
+    <title>Application Form</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: lightblue;
+        }
+
+        .form-box {
+            width: 650px;
+            margin: 30px auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: darkblue;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        td {
+            padding: 8px;
+        }
+
+        input, select, textarea {
+            padding: 7px;
+            width: 95%;
+        }
+
+        input[type="radio"],
+        input[type="checkbox"] {
+            width: auto;
+        }
+
+        .buttons {
+            text-align: center;
+        }
+
+        .buttons input {
+            width: 100px;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="form-box">
+
+    <h1>APPLICATION FORM</h1>
+
+    <form onsubmit="submitForm(event)">
+
+        <table>
+
+            <tr>
+                <td><b>Name</b></td>
+                <td><input type="text" id="name" required></td>
+            </tr>
+
+            <tr>
+                <td><b>Father's Name</b></td>
+                <td><input type="text" id="father" required></td>
+            </tr>
+
+            <tr>
+                <td><b>Date of Birth</b></td>
+                <td><input type="date" id="dob" required></td>
+            </tr>
+
+            <tr>
+                <td><b>Age</b></td>
+                <td><input type="number" id="age" required></td>
+            </tr>
+
+            <tr>
+                <td><b>Phone Number</b></td>
+                <td><input type="tel" id="phone" required></td>
+            </tr>
+
+            <tr>
+                <td><b>Email ID</b></td>
+                <td><input type="email" id="email" required></td>
+            </tr>
+
+            <tr>
+                <td><b>Gender</b></td>
+                <td>
+                    <input type="radio" name="gender" value="Male" required> Male
+                    <input type="radio" name="gender" value="Female"> Female
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Address</b></td>
+                <td>
+                    <textarea id="address" rows="4" required></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Qualification</b></td>
+                <td>
+                    <select id="qualification" required>
+                        <option value="">Select</option>
+                        <option>10th</option>
+                        <option>12th</option>
+                        <option>Diploma</option>
+                        <option>B.E / B.Tech</option>
+                        <option>M.E / M.Tech</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Hobbies</b></td>
+                <td>
+                    <input type="checkbox" value="Reading"> Reading
+                    <input type="checkbox" value="Sports"> Sports
+                    <input type="checkbox" value="Music"> Music
+                    <input type="checkbox" value="Games"> Games
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Programming Languages</b></td>
+                <td>
+                    <input type="checkbox" value="C"> C
+                    <input type="checkbox" value="C++"> C++
+                    <input type="checkbox" value="Java"> Java
+                    <input type="checkbox" value="Python"> Python
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Previous Experience</b></td>
+                <td>
+                    <input type="radio" name="experience" value="Yes" required> Yes
+                    <input type="radio" name="experience" value="No"> No
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Project Details</b></td>
+                <td>
+                    <textarea id="project" rows="4"></textarea>
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Marital Status</b></td>
+                <td>
+                    <select id="marital">
+                        <option>Single</option>
+                        <option>Married</option>
+                        <option>Other</option>
+                    </select>
+                </td>
+            </tr>
+
+        </table>
+
+        <div class="buttons">
+            <input type="submit" value="SUBMIT">
+            <input type="reset" value="RESET">
+        </div>
+
     </form>
+
+    <p id="result"></p>
+
+</div>
+
+<script>
+function submitForm(event) {
+    event.preventDefault();
+
+    let name = document.getElementById("name").value;
+
+    document.getElementById("result").innerHTML =
+        "<h3 style='color:green;text-align:center;'>Application Submitted Successfully!</h3>" +
+        "<p style='text-align:center;'>Welcome, " + name + "</p>";
+}
+</script>
+
+</body>
 </html>
