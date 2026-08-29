@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>InsureEasy - Insurance Management</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f8ff;
+    color:#333;
+}
+
+header{
+    background:#1769aa;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+header h1{
+    font-size:32px;
+}
+
+nav{
+    background:#0d4775;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:14px 18px;
+}
+
+nav a:hover{
+    background:#1769aa;
+}
+
+.hero{
+    background:#dceeff;
+    text-align:center;
+    padding:50px 20px;
+}
+
+.hero h2{
+    color:#1769aa;
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.container{
+    width:90%;
+    max-width:1150px;
+    margin:auto;
+}
+
+section{
+    background:white;
+    margin:22px 0;
+    padding:22px;
+    border-radius:10px;
+    box-shadow:0 2px 8px #ddd;
+}
+
+h2{
+    color:#1769aa;
+    margin-bottom:15px;
+}
+
+h3{
+    color:#0d4775;
+    margin:12px 0;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:11px;
+    margin:5px 0 12px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+textarea{
+    resize:vertical;
+}
+
+button{
+    background:#1769aa;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:5px;
+    cursor:pointer;
+    margin:3px;
+}
+
+button:hover{
+    background:#0d4775;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.card{
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:20px;
+    text-align:center;
+    background:#f9fcff;
+}
+
+.icon{
+    font-size:40px;
+}
+
+.price{
+    color:#1769aa;
+    font-size:20px;
+    font-weight:bold;
+    margin:10px;
+}
+
+.badge{
+    display:inline-block;
+    background:#dceeff;
+    color:#1769aa;
+    padding:5px 10px;
+    border-radius:15px;
+    margin:3px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    border:1px solid #ccc;
+    padding:10px;
+    text-align:center;
+}
+
+th{
+    background:#1769aa;
+    color:white;
+}
+
+.success{
+    color:green;
+    font-weight:bold;
+}
+
+.warning{
+    color:#d17b00;
+    font-weight:bold;
+}
+
+footer{
+    background:#0d4775;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+@media(max-width:800px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    nav{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    table{
+        font-size:12px;
+    }
+
+    .hero h2{
+        font-size:24px;
+    }
+
+}
+
+</style>
+
+<script>
+
+var policies=[];
+
+
+/* User Login */
+
+function userLogin(){
+
+    var email=
+    document.getElementById("userEmail").value;
+
+    var password=
+    document.getElementById("userPassword").value;
+
+    if(email=="" || password==""){
+
+        alert("Please enter email and password");
+
+    }
+    else{
+
+        alert("User Login Successful!");
+
+    }
+
+}
+
+
+/* Agent Registration */
+
+function agentRegister(){
+
+    var name=
+    document.getElementById("agentName").value;
+
+    var email=
+    document.getElementById("agentEmail").value;
+
+    if(name=="" || email==""){
+
+        alert("Please enter agent details");
+
+    }
+    else{
+
+        alert(
+            "Agent registration submitted.\n"+
+            "Waiting for Admin approval."
+        );
+
+    }
+
+}
+
+
+/* Agent Login */
+
+function agentLogin(){
+
+    var email=
+    document.getElementById("agentLoginEmail").value;
+
+    var password=
+    document.getElementById("agentLoginPassword").value;
+
+    if(email=="" || password==""){
+
+        alert("Enter agent login details");
+
+    }
+    else{
+
+        alert("Agent Login Successful!");
+
+    }
+
+}
+
+
+/* Admin Login */
+
+function adminLogin(){
+
+    var username=
+    document.getElementById("adminUser").value;
+
+    var password=
+    document.getElementById("adminPassword").value;
+
+    if(username=="" || password==""){
+
+        alert("Enter admin credentials");
+
+    }
+    else{
+
+        alert("Admin Login Successful!");
+
+    }
+
+}
+
+
+/* Create Customer */
+
+function createCustomer(){
+
+    var name=
+    document.getElementById("customerName").value;
+
+    var phone=
+    document.getElementById("customerPhone").value;
+
+    if(name=="" || phone==""){
+
+        alert("Enter customer details");
+
+    }
+    else{
+
+        alert(
+            "Customer created successfully!\n"+
+            "Name: "+name
+        );
+
+    }
+
+}
+
+
+/* Add Policy */
+
+function addPolicy(){
+
+    var customer=
+    document.getElementById("policyCustomer").value;
+
+    var type=
+    document.getElementById("policyType").value;
+
+    var amount=
+    document.getElementById("policyAmount").value;
+
+    var due=
+    document.getElementById("dueDate").value;
+
+    if(customer=="" ||
+       amount=="" ||
+       due==""){
+
+        alert("Please fill all policy details");
+
+        return;
+
+    }
+
+    policies.push({
+        customer:customer,
+        type:type,
+        amount:amount,
+        due:due
+    });
+
+    alert(
+        "Policy added successfully!\n"+
+        "Customer: "+customer+
+        "\nPolicy: "+type
+    );
+
+}
+
+
+/* Compare Policies */
+
+function comparePolicies(){
+
+    var type=
+    document.getElementById("compareType").value;
+
+    document.getElementById("comparison").innerHTML=
+
+    "<h3>Policy Comparison</h3>"+
+    "<p><b>Selected:</b> "+type+"</p>"+
+    "<table>"+
+    "<tr>"+
+    "<th>Plan</th>"+
+    "<th>Coverage</th>"+
+    "<th>Premium</th>"+
+    "</tr>"+
+    "<tr>"+
+    "<td>Basic</td>"+
+    "<td>₹5 Lakhs</td>"+
+    "<td>₹8,000/year</td>"+
+    "</tr>"+
+    "<tr>"+
+    "<td>Premium</td>"+
+    "<td>₹15 Lakhs</td>"+
+    "<td>₹18,000/year</td>"+
+    "</tr>"+
+    "</table>";
+
+}
+
+
+/* Premium Payment */
+
+function payPremium(){
+
+    var amount=
+    document.getElementById("paymentAmount").value;
+
+    if(amount==""){
+
+        alert("Enter premium amount");
+
+    }
+    else{
+
+        alert(
+            "Payment Successful!\n"+
+            "Premium Paid: ₹"+amount
+        );
+
+    }
+
+}
+
+
+/* SMS Alert */
+
+function sendSMS(){
+
+    var customer=
+    document.getElementById("smsCustomer").value;
+
+    if(customer==""){
+
+        alert("Enter customer name");
+
+    }
+    else{
+
+        alert(
+            "SMS Alert Sent Successfully!\n"+
+            "Customer: "+customer
+        );
+
+    }
+
+}
+
+
+/* Claim */
+
+function fileClaim(){
+
+    var policy=
+    document.getElementById("claimPolicy").value;
+
+    if(policy==""){
+
+        alert("Enter policy number");
+
+    }
+    else{
+
+        alert(
+            "Claim submitted successfully!\n"+
+            "Policy No: "+policy
+        );
+
+    }
+
+}
+
+
+/* Logout */
+
+function logout(){
+
+    alert("Logged out successfully!");
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+
+<header>
+
+<h1>🛡️ InsureEasy</h1>
+
+<p>Simple • Secure • Smart Insurance Management</p>
+
+</header>
+
+
+<nav>
+
+<a href="#home">Home</a>
+<a href="#login">User Login</a>
+<a href="#policies">Policies</a>
+<a href="#payment">Payment</a>
+<a href="#claims">Claims</a>
+<a href="#agent">Agent</a>
+<a href="#admin">Admin</a>
+<a href="#login" onclick="logout()">Logout</a>
+
+</nav>
+
+
+<div class="hero" id="home">
+
+<h2>Protect What Matters Most</h2>
+
+<p>Compare, manage and monitor your insurance policies easily.</p>
+
+</div>
+
+
+<div class="container">
+
+
+<!-- USER LOGIN -->
+
+<section id="login">
+
+<h2>👤 User Login</h2>
+
+<div class="form-grid">
+
+<div>
+
+<label>Email</label>
+
+<input type="email"
+id="userEmail"
+placeholder="Enter email">
+
+</div>
+
+<div>
+
+<label>Password</label>
+
+<input type="password"
+id="userPassword"
+placeholder="Enter password">
+
+</div>
+
+</div>
+
+<button onclick="userLogin()">
+Login
+</button>
+
+</section>
+
+
+<!-- POLICY TYPES -->
+
+<section>
+
+<h2>📋 Insurance Policies</h2>
+
+<div class="cards">
+
+<div class="card">
+
+<div class="icon">🏥</div>
+
+<h3>Health Insurance</h3>
+
+<p>Protect yourself and your family against medical expenses.</p>
+
+<div class="price">From ₹8,000/year</div>
+
+<button onclick="alert('Health Insurance selected')">
+View Policy
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🚗</div>
+
+<h3>Auto Insurance</h3>
+
+<p>Coverage for your vehicle against accidents and damages.</p>
+
+<div class="price">From ₹6,000/year</div>
+
+<button onclick="alert('Auto Insurance selected')">
+View Policy
+</button>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🏠</div>
+
+<h3>Home Insurance</h3>
+
+<p>Protect your home and valuable property.</p>
+
+<div class="price">From ₹10,000/year</div>
+
+<button onclick="alert('Home Insurance selected')">
+View Policy
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- POLICY COMPARISON -->
+
+<section>
+
+<h2>⚖️ Compare Policies</h2>
+
+<select id="compareType">
+
+<option>Health Insurance</option>
+<option>Auto Insurance</option>
+<option>Home Insurance</option>
+
+</select>
+
+<button onclick="comparePolicies()">
+Compare
+</button>
+
+<div id="comparison"></div>
+
+</section>
+
+
+<!-- AGENT -->
+
+<section id="agent">
+
+<h2>👨‍💼 Agent Registration</h2>
+
+<div class="form-grid">
+
+<input type="text"
+id="agentName"
+placeholder="Agent Name">
+
+<input type="email"
+id="agentEmail"
+placeholder="Agent Email">
+
+<input type="tel"
+placeholder="Phone Number">
+
+<input type="text"
+placeholder="License Number">
+
+</div>
+
+<button onclick="agentRegister()">
+Register as Agent
+</button>
+
+
+<h3>Agent Login</h3>
+
+<input type="email"
+id="agentLoginEmail"
+placeholder="Agent Email">
+
+<input type="password"
+id="agentLoginPassword"
+placeholder="Password">
+
+<button onclick="agentLogin()">
+Agent Login
+</button>
+
+</section>
+
+
+<!-- CUSTOMER -->
+
+<section>
+
+<h2>👥 Create Customer</h2>
+
+<div class="form-grid">
+
+<input type="text"
+id="customerName"
+placeholder="Customer Name">
+
+<input type="tel"
+id="customerPhone"
+placeholder="Phone Number">
+
+<input type="email"
+placeholder="Email">
+
+<input type="text"
+placeholder="Address">
+
+</div>
+
+<button onclick="createCustomer()">
+Create Customer
+</button>
+
+</section>
+
+
+<!-- MANAGE POLICY -->
+
+<section id="policies">
+
+<h2>📄 Manage Policy</h2>
+
+<div class="form-grid">
+
+<input type="text"
+id="policyCustomer"
+placeholder="Customer Name">
+
+<select id="policyType">
+
+<option>Health Insurance</option>
+<option>Auto Insurance</option>
+<option>Home Insurance</option>
+
+</select>
+
+<input type="number"
+id="policyAmount"
+placeholder="Premium Amount">
+
+<input type="date"
+id="dueDate">
+
+</div>
+
+<button onclick="addPolicy()">
+Add Policy
+</button>
+
+
+<h3>Existing Policies</h3>
+
+<table>
+
+<tr>
+<th>Policy No</th>
+<th>Customer</th>
+<th>Type</th>
+<th>Premium</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>POL1001</td>
+<td>Rahul</td>
+<td>Health</td>
+<td>₹8,000</td>
+<td class="success">Active</td>
+</tr>
+
+<tr>
+<td>POL1002</td>
+<td>Priya</td>
+<td>Auto</td>
+<td>₹6,000</td>
+<td class="warning">Due Soon</td>
+</tr>
+
+<tr>
+<td>POL1003</td>
+<td>Arun</td>
+<td>Home</td>
+<td>₹10,000</td>
+<td class="success">Active</td>
+</tr>
+
+</table>
+
+</section>
+
+
+<!-- PAYMENT -->
+
+<section id="payment">
+
+<h2>💳 Premium Payment</h2>
+
+<input type="text"
+placeholder="Policy Number">
+
+<input type="number"
+id="paymentAmount"
+placeholder="Premium Amount">
+
+<select>
+
+<option>UPI</option>
+<option>Credit Card</option>
+<option>Debit Card</option>
+<option>Net Banking</option>
+
+</select>
+
+<button onclick="payPremium()">
+Pay Premium
+</button>
+
+</section>
+
+
+<!-- CLAIM -->
+
+<section id="claims">
+
+<h2>📝 File Insurance Claim</h2>
+
+<input type="text"
+id="claimPolicy"
+placeholder="Policy Number">
+
+<select>
+
+<option>Medical Claim</option>
+<option>Vehicle Accident</option>
+<option>Property Damage</option>
+
+</select>
+
+<textarea
+placeholder="Describe your claim">
+</textarea>
+
+<button onclick="fileClaim()">
+Submit Claim
+</button>
+
+</section>
+
+
+<!-- SMS -->
+
+<section>
+
+<h2>📱 Send SMS Alert</h2>
+
+<input type="text"
+id="smsCustomer"
+placeholder="Customer Name">
+
+<select>
+
+<option>Premium Due Reminder</option>
+<option>Policy Renewal Reminder</option>
+<option>Payment Confirmation</option>
+
+</select>
+
+<button onclick="sendSMS()">
+Send SMS Alert
+</button>
+
+</section>
+
+
+<!-- ADMIN -->
+
+<section id="admin">
+
+<h2>⚙️ Administrator Login</h2>
+
+<input type="text"
+id="adminUser"
+placeholder="Admin Username">
+
+<input type="password"
+id="adminPassword"
+placeholder="Admin Password">
+
+<button onclick="adminLogin()">
+Admin Login
+</button>
+
+
+<h3>Agent Approval</h3>
+
+<table>
+
+<tr>
+<th>Agent</th>
+<th>Email</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+<tr>
+<td>Arun Kumar</td>
+<td>arun@gmail.com</td>
+<td>Pending</td>
+<td>
+<button onclick="alert('Agent Approved')">
+Approve
+</button>
+</td>
+</tr>
+
+<tr>
+<td>Priya Sharma</td>
+<td>priya@gmail.com</td>
+<td>Approved</td>
+<td>
+<button onclick="alert('Agent Details Viewed')">
+View
+</button>
+</td>
+</tr>
+
+</table>
+
+
+<h3>All Agent Details</h3>
+
+<table>
+
+<tr>
+<th>Agent ID</th>
+<th>Name</th>
+<th>Customers</th>
+<th>Policies</th>
+</tr>
+
+<tr>
+<td>A001</td>
+<td>Arun Kumar</td>
+<td>25</td>
+<td>32</td>
+</tr>
+
+<tr>
+<td>A002</td>
+<td>Priya Sharma</td>
+<td>18</td>
+<td>24</td>
+</tr>
+
+</table>
+
+</section>
+
+
+<!-- USER POLICY DASHBOARD -->
+
+<section>
+
+<h2>📊 My Policy Dashboard</h2>
+
+<table>
+
+<tr>
+<th>Policy</th>
+<th>Type</th>
+<th>Premium</th>
+<th>Next Due</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>POL1001</td>
+<td>Health</td>
+<td>₹8,000</td>
+<td>20-09-2026</td>
+<td class="success">Active</td>
+</tr>
+
+<tr>
+<td>POL1002</td>
+<td>Auto</td>
+<td>₹6,000</td>
+<td>05-09-2026</td>
+<td class="warning">Due Soon</td>
+</tr>
+
+</table>
+
+</section>
+
+
+</div>
+
+
+<footer>
+
+<p>© 2026 InsureEasy Insurance Management System</p>
+
+<p>Secure • Reliable • Easy</p>
+
+</footer>
+
+
+</body>
+</html>
